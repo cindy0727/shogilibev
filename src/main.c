@@ -3,8 +3,8 @@
 
 //getopt要用到的
 #include <ctype.h>
-#include <stdlib.h>
-#include <unistd.h>
+//#include <stdlib.h>
+//#include <unistd.h>
 extern char *optarg;
 extern int optind;
 extern int optopt;

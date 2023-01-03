@@ -24,6 +24,8 @@ void game(int * rear1, int * rear2, int *front1, int *front2, int *count, user *
     *rear1 += 1;
     usermeptr = addme(usermeptr);
     printf("依據圖上座標 User1 輸入想移動的棋子的原始座標空格移動後的位置座標:");
+    user1timer();
+    printf("跳出來\n");
     scanf("%1s%d%d%d", &usermeptr->input, &usermeptr->orignrow, &usermeptr->aftercol, &usermeptr->afterrow);
     if(usermeptr->input == 115)
     {
@@ -36,7 +38,8 @@ void game(int * rear1, int * rear2, int *front1, int *front2, int *count, user *
     usermeptr->aftercol = 10 - usermeptr->aftercol;
     cg +=1;
     user1move(usermeptr, useryouptr);
-    system("clear");
+    //system("clear");
+    printf("跳出來\n");
     printchess(usermeptr, useryouptr, &chess_board);
     //第二手開始進入迴圈
     while(1)
@@ -52,6 +55,7 @@ void game(int * rear1, int * rear2, int *front1, int *front2, int *count, user *
             useryouptr = youequal(useryouptr);
         }
         printf("依據圖上座標 User2 輸入想移動的棋子的原始座標空格移動後的位置座標:");
+        user2timer();
         scanf("%1s%d%d%d", &useryouptr->input, &useryouptr->orignrow, &useryouptr->aftercol, &useryouptr->afterrow);
         while(1)
         {
@@ -307,7 +311,7 @@ void game(int * rear1, int * rear2, int *front1, int *front2, int *count, user *
             user2move(useryouptr, usermeptr);
             user2eatuser1(useryouptr,usermeptr);
         }
-        system("clear");
+        //system("clear");
         printchess(usermeptr, useryouptr, &chess_board);
         //判斷勝利
         if(whowins(&chess_board) == 1)
@@ -332,6 +336,7 @@ void game(int * rear1, int * rear2, int *front1, int *front2, int *count, user *
             usermeptr = meequal(usermeptr);
         }
         printf("依據圖上座標 User1 輸入想移動的棋子的原始座標空格移動後的位置座標:");
+        user1timer();
         scanf("%1s%d%d%d", &usermeptr->input, &usermeptr->orignrow, &usermeptr->aftercol, &usermeptr->afterrow);
         while(1)
         {
@@ -585,7 +590,7 @@ void game(int * rear1, int * rear2, int *front1, int *front2, int *count, user *
             user1move(usermeptr, useryouptr);
             user1eatuser2(usermeptr,useryouptr);
         }
-        system("clear");
+        //system("clear");
         printchess(usermeptr, useryouptr, &chess_board);
         if(whowins(&chess_board) == 1)//判斷誰贏
         {

@@ -8,8 +8,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include<time.h>
-#include<unistd.h>
+#include <time.h>
+#include <unistd.h>
+#include <ev.h>
 
 typedef struct user_t
 {
@@ -29,8 +30,6 @@ typedef struct user_t
 FILE *fptr;
 
 user chess_board;
-//user userme[250];
-//user useryou[250];
 user *usermeptr;
 user *useryouptr;
 user *usermefrontptr;//記資料的頭
@@ -39,11 +38,15 @@ user *useryoufrontptr;//記資料的頭
 user *tmpmefrontptr;
 user *tmpyoufrontptr;
 
-//user userload[1000];
 user *userloadptr;//儲存s先儲存到這個linkedlist
 user *loadfrontptr;//記著資料頭的東西
 
-time_t metimestart, youtimestart, metimeend, youtimeend;
+//timer裡需要用到的參數
+ev_io stop_watcher; 
+ev_timer timeout_watcher;
+time_t user1starttime, user2starttime, user1endtime, user2endtime, user1usedtime, user2usedtime;
+int user1hour, user1minute, user1second, user2hour, user2minute, user2second;
+
 
 int rearone;
 int reartwo;
