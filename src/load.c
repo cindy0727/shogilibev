@@ -1,5 +1,5 @@
-#include "user.h"
-#include "function.h"
+//#include "../inc/user.h"
+#include "../inc/function.h"
 
 int rear1 = 0;
 int rear2 = 0;
@@ -17,8 +17,8 @@ void load()
     tmpc = 0;
     ire =0;
     //初始化雙方
-    creat_user1(usermeptr);//usermee[0] = 原始棋盤
-    creat_user2(useryouptr);//useryouu[0] = 原始棋盤
+    creat_user1(usermeptr);//原始棋盤
+    creat_user2(useryouptr);//原始棋盤
     printchess(usermeptr, useryouptr, &chess_board);
 
     //開始下棋
@@ -34,7 +34,7 @@ void load()
     }
     if(bof == 'f')
     {
-        fscanf(fptr,"%1s%d%d%d", &usermeptr->orignrow, &usermeptr->origncol, &usermeptr->afterrow, &usermeptr->aftercol);
+        fscanf(fptr,"%d%d%d%d", &usermeptr->origncol, &usermeptr->orignrow, &usermeptr->aftercol, &usermeptr->afterrow);
         c +=1;
         user1move(usermeptr, useryouptr);
         system("clear");
@@ -193,7 +193,7 @@ void load()
             c +=1;
             if(c > tmpc)
             {
-                fscanf(fptr,"%1s%d%d%d", &useryouptr->orignrow, &useryouptr->origncol, &useryouptr->afterrow, &useryouptr->aftercol);
+                fscanf(fptr,"%d%d%d%d", &useryouptr->origncol, &useryouptr->orignrow, &useryouptr->aftercol, &useryouptr->afterrow);
                 ire = 0;
             }
             user2move(useryouptr, usermeptr);
@@ -360,7 +360,7 @@ void load()
             c +=1;
             if(c > tmpc)
             {
-                fscanf(fptr,"%1s%d%d%d", &usermeptr->orignrow, &usermeptr->origncol, &usermeptr->afterrow, &usermeptr->aftercol);
+                fscanf(fptr,"%d%d%d%d", &usermeptr->origncol, &usermeptr->orignrow, &usermeptr->aftercol, &usermeptr->afterrow);
                 ire = 0;
             }
             user1move(usermeptr, useryouptr);

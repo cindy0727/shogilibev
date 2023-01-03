@@ -1,5 +1,5 @@
-#include "user.h"
-#include "function.h"
+//#include "../inc/user.h"
+#include "../inc/function.h"
 
 int breaking = 0;
 int savedone = 0;
@@ -24,13 +24,16 @@ void game(int * rear1, int * rear2, int *front1, int *front2, int *count, user *
     *rear1 += 1;
     usermeptr = addme(usermeptr);
     printf("依據圖上座標 User1 輸入想移動的棋子的原始座標空格移動後的位置座標:");
-    scanf("%1s%d%d%d", &usermeptr->orignrow, &usermeptr->origncol, &usermeptr->afterrow, &usermeptr->aftercol);
-    if(usermeptr->orignrow == 115)
+    scanf("%1s%d%d%d", &usermeptr->input, &usermeptr->orignrow, &usermeptr->aftercol, &usermeptr->afterrow);
+    if(usermeptr->input == 115)
     {
         printf("第一筆才不給你儲存資料 想不到吧哈哈 沒啦只是還要改linkedlist很麻煩所以第二手再儲存 感恩\n");
         printf("依據圖上座標 User1 輸入想移動的棋子的原始座標空格移動後的位置座標:");
-        scanf("%1s%d%d%d", &usermeptr->orignrow, &usermeptr->origncol, &usermeptr->afterrow, &usermeptr->aftercol);
+        scanf("%1s%d%d%d", &usermeptr->input, &usermeptr->orignrow, &usermeptr->aftercol, &usermeptr->afterrow);
     }
+    usermeptr->origncol = usermeptr->input - 48;
+    usermeptr->origncol = 10 - usermeptr->origncol;
+    usermeptr->aftercol = 10 - usermeptr->aftercol;
     cg +=1;
     user1move(usermeptr, useryouptr);
     system("clear");
@@ -49,10 +52,10 @@ void game(int * rear1, int * rear2, int *front1, int *front2, int *count, user *
             useryouptr = youequal(useryouptr);
         }
         printf("依據圖上座標 User2 輸入想移動的棋子的原始座標空格移動後的位置座標:");
-        scanf("%1s%d%d%d", &useryouptr->orignrow, &useryouptr->origncol, &useryouptr->afterrow, &useryouptr->aftercol);
+        scanf("%1s%d%d%d", &useryouptr->input, &useryouptr->orignrow, &useryouptr->aftercol, &useryouptr->afterrow);
         while(1)
         {
-            if(useryouptr->orignrow == 48)
+            if(useryouptr->input == 48)
             {
                 //user2輸入為0代表user1悔棋
                 if(ireg == 0)
@@ -97,10 +100,10 @@ void game(int * rear1, int * rear2, int *front1, int *front2, int *count, user *
                     usermeptr = meequal(usermeptr);
                 }
                 printf("依據圖上座標 User1 輸入想移動的棋子的原始座標空格移動後的位置座標:");
-                scanf("%1s%d%d%d", &usermeptr->orignrow, &usermeptr->origncol, &usermeptr->afterrow, &usermeptr->aftercol);
+                scanf("%1s%d%d%d", &usermeptr->input, &usermeptr->orignrow, &usermeptr->aftercol, &usermeptr->afterrow);
                 
                 //user1輸入0代表user2悔棋
-                if((usermeptr->orignrow == 48))
+                if((usermeptr->input == 48))
                 {
                     *rear2 -= 1;
                     if(*rear2 == (-1))
@@ -130,7 +133,7 @@ void game(int * rear1, int * rear2, int *front1, int *front2, int *count, user *
                     printchess(usermeptr, useryouptr, &chess_board);
                 }
                 //user1輸入s表示儲存 不儲存s
-                else if(usermeptr->orignrow == 115)
+                else if(usermeptr->input == 115)
                 {
                     //先寫到站存記憶體
                     savedone = 0;
@@ -185,12 +188,16 @@ void game(int * rear1, int * rear2, int *front1, int *front2, int *count, user *
                         savedone = 1;
                     }
                     //usermeptr = usermeptr->prev;
+                    printf("\n儲存完畢 請重新輸入座標\n\n");
                     printf("依據圖上座標 User1 輸入想移動的棋子的原始座標空格移動後的位置座標:");
-                    scanf("%1s%d%d%d", &usermeptr->orignrow, &usermeptr->origncol, &usermeptr->afterrow, &usermeptr->aftercol);
+                    scanf("%1s%d%d%d", &usermeptr->input, &usermeptr->orignrow, &usermeptr->aftercol, &usermeptr->afterrow);
                 }    
                 else//輸入非0可移動
                 {
                     cg +=1;
+                    usermeptr->origncol = usermeptr->input - 48;
+                    usermeptr->origncol = 10 - usermeptr->origncol;
+                    usermeptr->aftercol = 10 - usermeptr->aftercol;
                     user1move(usermeptr, useryouptr);
                     user1eatuser2(usermeptr,useryouptr);
                     system("clear");
@@ -220,10 +227,10 @@ void game(int * rear1, int * rear2, int *front1, int *front2, int *count, user *
                     useryouptr = youequal(useryouptr);
                 }
                 printf("依據圖上座標 User2 輸入想移動的棋子的原始座標空格移動後的位置座標:");
-                scanf("%1s%d%d%d", &useryouptr->orignrow, &useryouptr->origncol, &useryouptr->afterrow, &useryouptr->aftercol);
+                scanf("%1s%d%d%d", &useryouptr->input, &useryouptr->orignrow, &useryouptr->aftercol, &useryouptr->afterrow);
             }
             //user2輸入s表示儲存
-            else if(useryouptr->orignrow == 115)
+            else if(useryouptr->input == 115)
             {
                 savedone = 0;
                 while((*front1 < *rear1) || (*front2 < (*rear2-1)))
@@ -277,8 +284,9 @@ void game(int * rear1, int * rear2, int *front1, int *front2, int *count, user *
                     savedone = 1;
                 }
                 //useryouptr = useryouptr->prev;
+                printf("\n儲存完畢 請重新輸入座標\n\n");
                 printf("依據圖上座標 User2 輸入想移動的棋子的原始座標空格移動後的位置座標:");
-                scanf("%1s%d%d%d", &useryouptr->orignrow, &useryouptr->origncol, &useryouptr->afterrow, &useryouptr->aftercol);
+                scanf("%1s%d%d%d", &useryouptr->input, &useryouptr->orignrow, &useryouptr->aftercol, &useryouptr->afterrow);
             }    
             else
             {
@@ -293,9 +301,13 @@ void game(int * rear1, int * rear2, int *front1, int *front2, int *count, user *
         if(*rear2>0)
         {
             cg +=1;
+            useryouptr->origncol = useryouptr->input - 48;
+            useryouptr->origncol = 10 - useryouptr->origncol;
+            useryouptr->aftercol = 10 - useryouptr->aftercol;
             user2move(useryouptr, usermeptr);
             user2eatuser1(useryouptr,usermeptr);
         }
+        system("clear");
         printchess(usermeptr, useryouptr, &chess_board);
         //判斷勝利
         if(whowins(&chess_board) == 1)
@@ -320,10 +332,10 @@ void game(int * rear1, int * rear2, int *front1, int *front2, int *count, user *
             usermeptr = meequal(usermeptr);
         }
         printf("依據圖上座標 User1 輸入想移動的棋子的原始座標空格移動後的位置座標:");
-        scanf("%1s%d%d%d", &usermeptr->orignrow, &usermeptr->origncol, &usermeptr->afterrow, &usermeptr->aftercol);
+        scanf("%1s%d%d%d", &usermeptr->input, &usermeptr->orignrow, &usermeptr->aftercol, &usermeptr->afterrow);
         while(1)
         {
-            if((usermeptr->orignrow == 48))
+            if((usermeptr->input == 48))
             {
                 if(ireg == 0)
                 {
@@ -367,11 +379,11 @@ void game(int * rear1, int * rear2, int *front1, int *front2, int *count, user *
                     useryouptr = youequal(useryouptr);
                 }
                 printf("依據圖上座標 User2 輸入想移動的棋子的原始座標空格移動後的位置座標:");
-                scanf("%1s%d%d%d", &useryouptr->orignrow, &useryouptr->origncol, &useryouptr->afterrow, &useryouptr->aftercol);
+                scanf("%1s%d%d%d", &useryouptr->input, &useryouptr->orignrow, &useryouptr->aftercol, &useryouptr->afterrow);
                 
                 
                 //user2輸入0代表user1悔棋
-                if((useryouptr->orignrow == 48))
+                if((useryouptr->input == 48))
                 {
                     *rear1 = *rear1 - 1;
                     if(*rear1 == (-1))
@@ -401,7 +413,7 @@ void game(int * rear1, int * rear2, int *front1, int *front2, int *count, user *
                     printchess(usermeptr, useryouptr, &chess_board);
                 }
                 //user2輸入s儲存
-                else if(useryouptr->orignrow == 115)
+                else if(useryouptr->input == 115)
                 {
                     savedone = 0;
                     while((*front1 < *rear1)|| (*front2 < (*rear2-1)))
@@ -455,12 +467,16 @@ void game(int * rear1, int * rear2, int *front1, int *front2, int *count, user *
                         savedone =1;
                     }
                     //useryouptr = useryouptr->prev;
+                    printf("\n儲存完畢 請重新輸入座標\n\n");
                     printf("依據圖上座標 User2 輸入想移動的棋子的原始座標空格移動後的位置座標:");
-                    scanf("%1s%d%d%d", &useryouptr->orignrow, &useryouptr->origncol, &useryouptr->afterrow, &useryouptr->aftercol);
+                    scanf("%1s%d%d%d", &useryouptr->input, &useryouptr->orignrow, &useryouptr->aftercol, &useryouptr->afterrow);
                 }    
                 else
                 {
                     cg +=1;
+                    useryouptr->origncol = useryouptr->input - 48;
+                    useryouptr->origncol = 10 - useryouptr->origncol;
+                    useryouptr->aftercol = 10 - useryouptr->aftercol;
                     user2move(useryouptr, usermeptr);
                     user2eatuser1(useryouptr,usermeptr);
                     system("clear");
@@ -489,10 +505,10 @@ void game(int * rear1, int * rear2, int *front1, int *front2, int *count, user *
                     usermeptr = meequal(usermeptr);
                 }
                 printf("依據圖上座標 User1 輸入想移動的棋子的原始座標空格移動後的位置座標:");
-                scanf("%1s%d%d%d", &usermeptr->orignrow, &usermeptr->origncol, &usermeptr->afterrow, &usermeptr->aftercol);
+                scanf("%1s%d%d%d", &usermeptr->input, &usermeptr->orignrow, &usermeptr->aftercol, &usermeptr->afterrow);
             }
             //user1輸入s表示儲存
-            else if(usermeptr->orignrow == 115)
+            else if(usermeptr->input == 115)
             {
                 savedone = 0;
                 while((*front1 < (*rear1-1)) || (*front2 < *rear2))
@@ -547,8 +563,9 @@ void game(int * rear1, int * rear2, int *front1, int *front2, int *count, user *
                 }
                 //*rear1 -=1;
                 //usermeptr = usermeptr->prev;
+                printf("\n儲存完畢 請重新輸入座標\n\n");
                 printf("依據圖上座標 User1 輸入想移動的棋子的原始座標空格移動後的位置座標:");
-                scanf("%1s%d%d%d", &usermeptr->orignrow, &usermeptr->origncol, &usermeptr->afterrow, &usermeptr->aftercol);
+                scanf("%1s%d%d%d", &usermeptr->input, &usermeptr->orignrow, &usermeptr->aftercol, &usermeptr->afterrow);
             }    
             else
             {
@@ -562,6 +579,9 @@ void game(int * rear1, int * rear2, int *front1, int *front2, int *count, user *
         if(*rear1 >0)
         {
             cg +=1;
+            usermeptr->origncol = usermeptr->input - 48;
+            usermeptr->origncol = 10 - usermeptr->origncol;
+            usermeptr->aftercol = 10 - usermeptr->aftercol;
             user1move(usermeptr, useryouptr);
             user1eatuser2(usermeptr,useryouptr);
         }

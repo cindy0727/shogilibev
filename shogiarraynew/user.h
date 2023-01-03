@@ -9,7 +9,6 @@
 #include <string.h>
 #include <math.h>
 #include<time.h>
-#include<unistd.h>
 
 typedef struct user_t
 {
@@ -22,27 +21,18 @@ typedef struct user_t
     char orignrow;
     int origncol, afterrow, aftercol;
 
-    struct user_t *prev;
-    struct user_t *next;
-
 } user;
 
 FILE *fptr;
 
 user chess_board;
-//user userme[250];
-//user useryou[250];
+user userme[250];
+user useryou[250];
 user *usermeptr;
 user *useryouptr;
-user *usermefrontptr;//記資料的頭
-user *useryoufrontptr;//記資料的頭
 
-user *tmpmefrontptr;
-user *tmpyoufrontptr;
-
-//user userload[1000];
-user *userloadptr;//儲存s先儲存到這個linkedlist
-user *loadfrontptr;//記著資料頭的東西
+user userload[1000];
+user *userloadptr;
 
 int rearone;
 int reartwo;

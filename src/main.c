@@ -1,5 +1,5 @@
-#include "user.h"
-#include "function.h"
+//#include "../inc/user.h"
+#include "../inc/function.h"
 
 //getopt要用到的
 #include <ctype.h>
@@ -22,8 +22,12 @@ int main(int argc, char ** argv)
     usermeptr->prev = NULL;
     usermeptr->tmp = ' ';
     usermeptr->tmprow = -1;
+    usermeptr->tmpcol = -1;
+    usermeptr->orignrow = -1;
+    usermeptr->origncol = -1;
     usermeptr->afterrow = -1;
     usermeptr->aftercol = -1;
+    usermeptr->input = ' ';
     usermeptr->next = NULL;
 
     usermefrontptr = usermeptr;
@@ -33,8 +37,12 @@ int main(int argc, char ** argv)
     useryouptr->prev = NULL;
     useryouptr->tmp = ' ';
     useryouptr->tmprow = -1;
+    useryouptr->tmpcol = -1;
+    useryouptr->orignrow = -1;
+    useryouptr->origncol = -1;
     useryouptr->afterrow = -1;
     useryouptr->aftercol = -1;
+    useryouptr->input = ' ';
     useryouptr->next = NULL;
 
     useryoufrontptr = useryouptr;
@@ -44,6 +52,9 @@ int main(int argc, char ** argv)
     userloadptr->prev = NULL;
     userloadptr->tmp = ' ';
     userloadptr->tmprow = -1;
+    userloadptr->tmpcol = -1;
+    userloadptr->orignrow = -1;
+    userloadptr->origncol = -1;
     userloadptr->afterrow = -1;
     userloadptr->aftercol = -1;
     userloadptr->next = NULL;
@@ -96,9 +107,10 @@ int main(int argc, char ** argv)
     //開始遊戲
     if(mode == 1)
     {
+        system("clear");
         initgame(&chess_board);
         game(&rearone, &reartwo, &frontone, &fronttwo, &counter, &tmpmefrontptr, &tmpyoufrontptr);
-        printf("%d %d", rearone, reartwo);
+        //printf("%d %d", rearone, reartwo);
         while((fronttwo < reartwo) || (frontone < rearone))
         {
             if(frontone > fronttwo)
@@ -148,23 +160,24 @@ int main(int argc, char ** argv)
                     
                 }
                 counter +=1;
-                printf("front1:%d\n", frontone);
+                //printf("front1:%d\n", frontone);
             }   
         }
 
         user *tmpfprint;//fprint時用到的暫存器
         tmpfprint = loadfrontptr;
-        printf("\n%d\n", counter);
+        //printf("\n%d\n", counter);
         for(int c = 0; c < counter; c++)
         {
-            printf("%d \n",c);
-            fprintf(fptr, "%c %d %d %d\n", tmpfprint->orignrow, tmpfprint->origncol, tmpfprint->afterrow, tmpfprint->aftercol);
+            //printf("%d \n",c);
+            fprintf(fptr, "%d %d %d %d\n", tmpfprint->origncol, tmpfprint->orignrow, tmpfprint->aftercol, tmpfprint->afterrow);
             tmpfprint = tmpfprint->next;
         }
         fprintf(fptr, "%c",'^');
     }
     if(mode == 2)
     {
+        system("clear");
         initgame(&chess_board);
         load();
     }
